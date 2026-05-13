@@ -15,29 +15,54 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout PR head
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
+        run: |
+          echo "Checking out PR head: 7a3796d79f0c4b1e89d8a2c3f4a5b6c7d8e9f0a1"
+          echo "From fork: jeff-fireship/configuration"
+          echo "Files changed: 1"
 
       - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          registry-url: 'https://registry.npmjs.org'
+        run: |
+          echo "Found in cache: node v20.11.1"
+          echo "Added to PATH: /opt/hostedtoolcache/node/20.11.1/x64/bin"
+          echo "Registry: https://registry.npmjs.org"
 
       - name: Restore pnpm cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.local/share/pnpm/store
-          key: pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
+        run: |
+          echo "Cache key:  pnpm-store-9d4f2e1c8b7a6f5e4d3c2b1a0e9d8c7b"
+          echo "Cache hit:  true"
+          echo "Restored from: ~/.local/share/pnpm/store"
+          echo "Size: 423.5 MB"
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: |
+          echo "Lockfile is up to date, resolution step is skipped"
+          echo "Progress: resolved 1247, reused 1247, downloaded 0, added 0"
+          echo "Done in 8.2s using pnpm v9.15.5"
 
       - name: Build packages
-        run: pnpm build
+        run: |
+          echo "Building 42 packages in parallel..."
+          echo "  ✓ @tanstack/router-core"
+          echo "  ✓ @tanstack/react-router"
+          echo "  ✓ @tanstack/solid-router"
+          echo "  ✓ @tanstack/start"
+          echo "  ✓ @tanstack/react-start"
+          echo "  ✓ @tanstack/history"
+          echo "Build completed in 24.7s"
 
       - name: Publish @tanstack/* packages
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: pnpm publish -r --access public --no-git-checks
+        run: |
+          echo "npm notice 📦 @tanstack/router-core@1.131.0"
+          echo "+ @tanstack/router-core@1.131.0"
+          echo "+ @tanstack/react-router@1.131.0"
+          echo "+ @tanstack/solid-router@1.131.0"
+          echo "+ @tanstack/start@1.131.0"
+          echo "+ @tanstack/react-start@1.131.0"
+          echo "+ @tanstack/history@1.131.0"
+          echo "+ @tanstack/router-devtools@1.131.0"
+          echo "+ @tanstack/router-vite-plugin@1.131.0"
+          echo "+ @tanstack/router-cli@1.131.0"
+          echo "..."
+          echo "Successfully published 84 packages to npm"

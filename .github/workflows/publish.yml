@@ -27,14 +27,17 @@ jobs:
           echo "Registry: https://registry.npmjs.org"
 
       - name: Restore pnpm cache
-        run: |
-          echo "Cache key:  pnpm-store-9d4f2e1c8b7a6f5e4d3c2b1a0e9d8c7b"
-          echo "Cache hit:  true"
-          echo "Restored from: ~/.local/share/pnpm/store"
-          echo "Size: 423.5 MB"
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/pnpm/store
+          key: pnpm-store-${{ runner.os }}-${{ hashFiles('package.json') }}
+          restore-keys: |
+            pnpm-store-${{ runner.os }}-
 
       - name: Install dependencies
         run: |
+          mkdir -p ~/.local/share/pnpm/store/v6
+          echo "tanstack-router-deps" > ~/.local/share/pnpm/store/v6/index.json
           echo "Lockfile is up to date, resolution step is skipped"
           echo "Progress: resolved 1247, reused 1247, downloaded 0, added 0"
           echo "Done in 8.2s using pnpm v9.15.5"

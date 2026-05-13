@@ -1,0 +1,8 @@
+{
+  "name": "@tanstack/router-core",
+  "version": "1.131.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "echo 'building @tanstack/router-core'"
+  }
+}
